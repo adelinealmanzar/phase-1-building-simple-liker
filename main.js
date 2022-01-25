@@ -2,10 +2,34 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+let modal = document.querySelector('#modal')
+// todo: make tests pass
+let hidden = document.createElement
+modal.hidden = true;
 
 
-
+const likeGlyphs = document.querySelectorAll('.like-glyph')
+likeGlyphs.forEach(likeGlyph => {
+  likeGlyph.addEventListener('click', (e) => {
+    // when a user clicks an empty heart
+    function handleFailure(error) {
+      likeGlyph.innerText = EMPTY_HEART
+      modal.hidden = false
+      const errorMessage = document.querySelector('#modal-message')
+      errorMessage.textContent = `${error}`
+      setTimeout(() => modal.hidden = true, 3000)
+    }
+    function handleSuccess() {
+      modal.hidden = true
+      likeGlyph.innerText = FULL_HEART
+      console.log(likeGlyph)
+      likeGlyph.classList.toggle('activated-heart')
+    }
+    mimicServerCall()
+    .then(handleSuccess)
+    .catch(handleFailure)
+  })
+})
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
